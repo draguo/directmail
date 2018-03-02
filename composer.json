@@ -1,0 +1,27 @@
+{
+    "name": "draguo/directmail",
+    "description": "阿里云邮件发送",
+    "require": {
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Draguo\\DirectMail\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Draguo\\DirectMail\\Tests\\": "tests"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "draguo",
+            "email": "draguo@sina.com"
+        }
+    ]
+}
