@@ -27,8 +27,26 @@ trait Helpers
         return self::REGION == 'hangzhou' ? '2015-11-23' : '2017-06-22';
     }
 
-    private function getSignature()
+    private function getSignature(array $params)
     {
-        // todo
+        ksort($params);
+        $queryString = '';
+        foreach ($params as $key => $value) {
+            $queryString .= '&' . $this->percentEncode($key). '=' . $this->percentEncode($value);
+        }
+
+        $stringToSign = 'GET&%2F&'. $this->percentencode(substr($queryString, 1));
+
+        return base64_encode(hash_hmac('sha1', $stringToSign, $this->secret."&", true));
+
+    }
+
+    protected function percentEncode($str)
+    {
+        $res = urlencode($str);
+        $res = preg_replace('/\+/', '%20', $res);
+        $res = preg_replace('/\*/', '%2A', $res);
+        $res = preg_replace('/%7E/', '~', $res);
+        return $res;
     }
 }

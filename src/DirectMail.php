@@ -28,7 +28,7 @@ class DirectMail
 
         $this->setParams($mail->getParams());
 
-        return $this->post($this->getRequestUrl(), $this->getParams());
+        return $this->get($this->getRequestUrl(), $this->getParams());
     }
 
     private function getParams()
@@ -43,9 +43,10 @@ class DirectMail
             'SignatureNonce' => md5(uniqid(mt_rand(), true)), // 唯一随机数
             'RegionId' => self::REGION // 机房信息
         ];
+        $this->setParams($baseParams);
 
         $this->setParams([
-            'Signature' => $this->getSignature(array_merge($baseParams, $this->params))
+            'Signature' => $this->getSignature($this->params)
         ]);
 
         return $this->params;

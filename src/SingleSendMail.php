@@ -12,6 +12,8 @@ class SingleSendMail implements MailInterface
 
     public function getParams()
     {
-        return [];
+        return [
+
+        ];
     }
 }
