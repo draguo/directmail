@@ -3,7 +3,6 @@
 namespace Draguo\DirectMail;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 
 trait HttpRequest
 {
@@ -21,14 +20,8 @@ trait HttpRequest
     protected function get($uri, $params = [])
     {
         $client = new Client();
-        try{
-            $result = $client->get($uri, [
-                'query' => $params,
-            ])->getBody()->getContents();
-            return $result;
-        }catch (RequestException $exception) {
-            echo $exception->getResponse()->getBody()->getContents();
-        }
-
+        return $client->get($uri, [
+            'query' => $params,
+        ])->getBody()->getContents();
     }
 }

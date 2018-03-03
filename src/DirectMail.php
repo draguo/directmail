@@ -22,17 +22,14 @@ class DirectMail
         $this->secret = $secret;
     }
 
+    /**
+     * @param array $message
+     * @return string
+     * send single mail
+     */
     public function send(array $message)
     {
-        $mail = new SingleSendMail($message);
-
-        $this->setParams($mail->getParams());
-
-        return $this->get($this->getRequestUrl(), $this->getParams());
-    }
-
-    private function getParams()
-    {
+        // 公共参数
         $baseParams = [
             'Format' => self::FORMAT,
             'Version' => $this->getVersion(),
@@ -45,14 +42,25 @@ class DirectMail
         ];
         $this->setParams($baseParams);
 
+        // 特殊参数
+        $mail = new SingleSendMail($message);
+
+        $this->setParams($mail->getParams());
+
+        // 设置签名
         $this->setParams([
-            'Signature' => $this->getSignature($this->params)
+            'Signature' => $this->generateSignature($this->params)
         ]);
 
+        return $this->get($this->getRequestUrl(), $this->getParams());
+    }
+
+    public function getParams()
+    {
         return $this->params;
     }
 
-    protected function setParams(array $params)
+    public function setParams(array $params)
     {
         $this->params = array_merge($this->params, $params);
     }

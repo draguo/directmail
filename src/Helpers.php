@@ -24,10 +24,10 @@ trait Helpers
      */
     private function getVersion()
     {
-        return self::REGION == 'hangzhou' ? '2015-11-23' : '2017-06-22';
+        return self::REGION == 'cn-hangzhou' ? '2015-11-23' : '2017-06-22';
     }
 
-    private function getSignature(array $params)
+    private function generateSignature(array $params)
     {
         ksort($params);
         $queryString = '';
